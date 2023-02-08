@@ -1,0 +1,1 @@
+export * as amqp from "https://deno.land/x/amqp@v0.22.0/mod.ts";
