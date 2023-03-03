@@ -133,10 +133,10 @@ export class OE_RPC_Client {
   computeBestPriority(args: { reptitions: number; msgLength: number }) {
     // Higher the better
     const repetitionsScore = 1 - args.reptitions;
-    // Lower the betther
-    const lengthScore = args.msgLength = Math.log1p(args.msgLength);
     // Lower the better
-    let priority = Math.round(5 - repetitionsScore + lengthScore);
+    const lengthScore = Math.log1p(args.msgLength);
+    // Higher the better
+    let priority = Math.round(5 + repetitionsScore - lengthScore);
     priority = Math.max(1, priority);
     priority = Math.min(9, priority);
     return priority;
