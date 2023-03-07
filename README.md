@@ -6,24 +6,39 @@
 
 ### Prerequisites
 
- - Python 3
+ - [Deno Typescript runtime](https://deno.land/)
  - An AMQP broker. I personally use RabbitMQ
- - Everything included in [/objection_engine/Readme.md](https://github.com/LuisMayo/objection_engine/blob/main/README.md#prerequisites)
+ - A working [objection engine worker](https://github.com/LuisMayo/Objection-Engine-Rabbit-Worker)
 
 ### Installing
 
 1. Clone the repository
 
 ```
-git clone --recursive https://github.com/LuisMayo/Objection-Engine-Rabbit-Worker
+git clone https://github.com/LuisMayo/objection-engine-deno-client
 ```
-2. Install dependencies of this repo. Refer to [objection engine's install instructions](https://github.com/LuisMayo/objection_engine/blob/main/README.md#installing) for any problems you may encounter
+2. Run the tests
 ``` bash
-python -m pip install .
+deno test --allow-read --allow-write --allow-net test.ts
 ```
 
-3. Start the project, either the `slow_queue` for the rendering queue or the `fast_queue` for faster operations like the music list
-`python slow_queue.py`
+3. To use it as a library
+``` typescript
+import {  OE_RPC_Client, Comment } from "../deps.ts";
+const rpc = new OE_RPC_Client();
+await rpc.init();
+rpc.getQueueLength().then((val) => {
+  console.log(val)
+});
+rpc.render({
+  comment_list: [new Comment()],
+  avoid_spoiler_sprites: true,
+  resolution_scale: 2,
+  output_filename: 'test.mp4',
+}, { priority: 5 }).then((value) => {
+  console.log(value);
+});
+```
 
 ## Contributing
 Since this is a tiny project we don't have strict rules about contributions. Just open a Pull Request to fix any of the project issues or any improvement you have percieved on your own. Any contributions which improve or fix the project will be accepted as long as they don't deviate too much from the project objectives. If you have doubts about whether the PR would be accepted or not you can open an issue before coding to ask for my opinion
