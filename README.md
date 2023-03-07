@@ -19,7 +19,7 @@ git clone https://github.com/LuisMayo/objection-engine-deno-client
 ```
 2. Run the tests
 ``` bash
-deno test --allow-read --allow-write --allow-net test.ts
+deno test --allow-read --allow-write --allow-net --allow-env test.ts
 ```
 
 3. To use it as a library
